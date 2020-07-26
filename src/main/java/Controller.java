@@ -59,34 +59,9 @@ public class Controller implements Initializable {
         if (op[0].equals("./download")) {
             try {
                 os.write(command.getBytes());
-                String success = "";
-                while (is.available() == 0) {
-                    ;
-                }
-                while (is.available() > 0) {
-                    int add = is.read();
-                    if (add == 10) break;
-                    else success += String.valueOf((char) add);
-                }
-                buffer.flip();
-                if (success.equals("OK")) {
-                    while (is.available() > 0) {
-                        is.read(buffer.array());
-                    }
 
-                    Path path = Paths.get(clientFilesPath, fileName);
-                    if (!Files.exists(path)) {
-                        Files.createFile(path);
-                        lv.getItems().add(fileName);
-                    }
-                    Files.write(path, buffer.array(), StandardOpenOption.APPEND);
-                    buffer.clear();
-                }
-                System.out.println(success);
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-
             }
         } else if (op[0].equals("./upload")) {
             try {
